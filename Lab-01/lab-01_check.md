@@ -2,6 +2,7 @@
 ``` bash
 ls -R
 ```
+``` output
 .:
 Lab-01  Lab-02  Lab-03
 
@@ -48,17 +49,20 @@ load_data.py
 ./Lab-02:
 
 ./Lab-03:
+```
 
 # Dataset file listings
 ```bash
 ls -l Lab-01/ooais-project/data/raw/
 ```
+``` output
 total 0
 -rwxrwxrwx 1 szymon szymon 229 Mar 20 17:03 observations.csv
-
+```
 ```bash
 ls -l Lab-01/ooais-project/data/processed/
 ```
+```output
 total 0
 -rwxrwxrwx 1 szymon szymon 189 Mar 18 17:15 final.csv
 -rwxrwxrwx 1 szymon szymon 189 Mar 20 16:39 observations_clean.csv
@@ -66,6 +70,7 @@ total 0
 -rwxrwxrwx 1 szymon szymon 155 Mar 18 17:56 temperature_anomalies.csv
 -rwxrwxrwx 1 szymon szymon 115 Mar 20 16:26 temperature_greater_than_15_2.csv
 -rwxrwxrwx 1 szymon szymon 229 Mar 18 17:14 tmp.csv
+```
 
 # Results of search and count commands
 ## PT 1
@@ -73,25 +78,31 @@ total 0
 ```bash
 tail -n +2 Lab-01/ooais-project/data/raw/observations.csv | wc -l
 ```
+```output
 5
+```
 
 ### Identify all unique object identifiers.
 ```bash
 cat Lab-01/ooais-project/data/raw/observations.csv | cut -d',' -f2 | tail -n +2 | sort | uniq
 ```
+```output
 OBJ-001
 OBJ-002
 OBJ-003
 OBJ-004
+```
 
 ### Count how many times each object appears.
 ```bash
 cat Lab-01/ooais-project/data/raw/observations.csv | cut -d',' -f2 | tail -n +2 | sort | uniq -c
 ```
+```output
       2 OBJ-001
       1 OBJ-002
       1 OBJ-003
       1 OBJ-004
+```
 
 ## PT 2
 ### Extract all records where temperature is greater than 15.2 and save them to a new file.
@@ -103,8 +114,10 @@ cat Lab-01/ooais-project/data/raw/observations.csv | awk -F',' '$3 > 15.2' | gre
 ```bash
 grep INVALID Lab-01/ooais-project/data/raw/observations.csv | tee >(wc -l) 
 ```
+```output
 2026-03-01T12:20:00,OBJ-004,INVALID,7.8
 1
+```
 
 ### Create a cleaned dataset without invalid entries.
 ```bash
@@ -121,7 +134,6 @@ cut -d',' -f1,2,3 Lab-01/ooais-project/data/raw/observations.csv > Lab-01/ooais-
 – compute average temperature,
 – count occurrences of each object,
 – display the results in a structured format.
-
 ```python
 with open("Lab-01/ooais-project/data/raw/observations.csv") as file:
     lines = file.readlines()
@@ -152,7 +164,7 @@ print("Temperatures clean:", temperatures_clean)
 avg_temp = sum(temperatures_clean) / len(temperatures_clean)
 print("Average temperature:", avg_temp)
 ```
-
+```output
 Number of records: 5
 Objects: ['OBJ-001', 'OBJ-002', 'OBJ-003', 'OBJ-001', 'OBJ-004']
 Objects clean: ['OBJ-001', 'OBJ-002', 'OBJ-003', 'OBJ-004']
@@ -164,6 +176,7 @@ OBJ-004: 1
 Temperatures: ['15.3', '14.9', '15.1', '15.4', 'INVALID']
 Temperatures clean: [15.3, 14.9, 15.1, 15.4]
 Average temperature: 15.175
+```
 
 ### Compare raw and cleaned datasets and explain the differences.
 By comparing raw and cleaned datasets, we can see that the cleaned one no longer contains the invalid record for OBJ-004. On one hand it is good because we can now use this file for further analysss, but on other hand, if we only look at the cleaned version, we lose the information that an error originally occurred in our dataset.
@@ -172,12 +185,14 @@ By comparing raw and cleaned datasets, we can see that the cleaned one no longer
 ```bash
 ls -l
 ```
+```output
 total 0
 drwxrwxrwx 1 szymon szymon 512 Mar 18 16:59 data
 drwxrwxrwx 1 szymon szymon 512 Mar 18 17:01 experiments
 drwxrwxrwx 1 szymon szymon 512 Mar 20 18:10 reports
 drwxrwxrwx 1 szymon szymon 512 Mar 18 17:01 results
 drwxrwxrwx 1 szymon szymon 512 Mar 20 18:05 src
+```
 
 # Summary of performed tasks
 Created OOAIS project structure, simulated data cleaning by removing INVALID records, implemented Python data ingestion script.
