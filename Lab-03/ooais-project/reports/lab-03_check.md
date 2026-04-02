@@ -11,7 +11,6 @@ total 32
 -rwxrwxrwx 1 szymon szymon   229 Mar 20 17:03 observations.csv
 -rwxrwxrwx 1 szymon szymon 28739 Mar 25 16:52 orbital_observations.csv
 
-
 Task 2: Inspecting Metadata
 Display metadata content:
 cat data/raw/metadata.json
@@ -50,3 +49,31 @@ Validate JSON syntax:
 python3 -m json.tool data/raw/metadata.json
 If the command prints the formatted JSON content, the file is valid. If an error message is
 displayed, the JSON structure is incorrect and must be fixed.
+python3 
+-m json.tool data/raw/metadata.json
+{
+    "dataset_name": "orbital_observations",
+    "num_records": 500,
+    "columns": [
+        "timestamp",
+        "object_id",
+        "temperature",
+        "velocity",
+        "altitude",
+        "signal_strength",
+        "sensor_status",
+...
+
+Task 4: Implementing the Ingestion Script
+- done in src/ingestion/ingest_data.py
+
+Task 5: Column Consistency Validation
+- done in src/ingestion/ingest_data.py
+•What types of changes in the dataset could cause a mismatch?
+- for instance any change of a name or extra columns in metadata or in dataset
+•Is column order always important? In which cases?
+- It depends on how the script is written. In my case, column order is important because any change would affect the lists I'm comparing, causing them to no longer match. A solution for this would be to sort both lists before performing the comparison.
+•Should the pipeline stop if validation fails?
+- yes, if there is no solution for this in the pipeline
+
+Task 9: Preparing Data for Preprocessing and Model Input
